@@ -8,8 +8,12 @@ import Coverage from "../pages/Coverage/coverage";
 import PrivateRoute from "../routes/privateRoute";
 import SendDonation from "../pages/SendDonation/SendDonation";
 import MyDonations from "../pages/Dashboard/MyDonations/MyDonations";
+import Profile from "../pages/Dashboard/Profile/Profile";
 import DashboardLayout from "../layouts/DashboardLayout"; // make sure to import this
 import Campaign from "../pages/Campaign/Campaigns";
+import CampaignDetails from "../pages/Campaign/CampaignDetails";
+import ManageCampaigns from "../pages/Dashboard/ManageCampaigns/ManageCampaigns";
+import CampaignForm from "../pages/Dashboard/ManageCampaigns/CampaignForm";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +31,10 @@ export const router = createBrowserRouter([
       {
        path:'campaign',
        element:<Campaign  />
+      },
+      {
+        path: 'campaign/:slug',
+        element: <CampaignDetails />
       },
       {
         path: 'SendDonation',
@@ -60,7 +68,23 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'myDonations',
-        element: <MyDonations /> // changed from Component
+        element: <MyDonations />
+      },
+      {
+        path: 'profile',
+        element: <Profile />
+      },
+      {
+        path: 'campaigns',
+        element: <ManageCampaigns />
+      },
+      {
+        path: 'campaigns/create',
+        element: <CampaignForm />
+      },
+      {
+        path: 'campaigns/edit/:slug',
+        element: <CampaignForm />
       }
     ],
   }

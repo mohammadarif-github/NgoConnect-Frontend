@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { FaHandsHelping, FaDonate, FaUser } from "react-icons/fa";
+import { FaHandsHelping, FaDonate, FaUser, FaBullhorn } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import useAuth from "../hooks/useAuth";
 
 const navLinkClass = ({ isActive }) =>
   `flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition
@@ -10,6 +11,9 @@ const navLinkClass = ({ isActive }) =>
    }`;
 
 const DashboardLayout = () => {
+  const { user } = useAuth();
+  const isAdminOrManager = user?.role === 'admin' || user?.role === 'manager';
+
   return (
     <div className="drawer lg:drawer-open min-h-screen bg-base-100">
       {/* Toggle checkbox */}
@@ -61,6 +65,16 @@ const DashboardLayout = () => {
                 Dashboard
               </NavLink>
             </li>
+
+            {/* Admin / Manager Only Links */}
+            {isAdminOrManager && (
+              <li>
+                <NavLink to="/dashboard/campaigns" className={navLinkClass}>
+                  <FaBullhorn />
+                  Manage Campaigns
+                </NavLink>
+              </li>
+            )}
 
             <li>
               <NavLink to="/dashboard/myDonations" className={navLinkClass}>

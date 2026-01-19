@@ -1,25 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
-import SocialLogin from '../SocialLogin/SocialLogin';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { signIn } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleLogin = (data) => {
-        console.log('form data', data);
-        signIn(data.email, data.password)
-            .then(result => {
-                console.log(result.user)
-                navigate(location?.state || '/')
-            })
-            .catch(error => {
-                console.log(error)
-            })
+    const handleLogin = async (data) => {
+        setIsLoading(true);
+        try {
+            const result = await signIn(data.email, data.password);
+            console.log('Login successful:', result);
+            toast.success('Login successful!');
+            navigate(location?.state || '/');
+        } catch (error) {
+            console.error('Login error:', error);
+            const errorMessage = error.response?.data?.detail 
+                || error.response?.data?.error 
+                || 'Login failed. Please check your credentials.';
+            toast.error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -28,7 +35,7 @@ const Login = () => {
             <p className='text-center text-green-500'>Please Login</p>
 
             <form className="card-body" onSubmit={handleSubmit(handleLogin)}>
-                <fieldset className="fieldset">
+                <fieldset className="fieldset" disabled={isLoading}>
                     {/* email field */}
                     <label className="label text-green-700">Email</label>
                     <input
@@ -51,6 +58,10 @@ const Login = () => {
                         placeholder="Password"
                     />
                     {
+                        errors.password?.type === 'required' &&
+                        <p className='text-red-500'>Password is required</p>
+                    }
+                    {
                         errors.password?.type === 'minLength' &&
                         <p className='text-red-500'>Password must be 6 characters or longer</p>
                     }
@@ -59,8 +70,12 @@ const Login = () => {
                         <a className="link link-hover text-green-600">Forgot password?</a>
                     </div>
 
-                    <button className="btn bg-green-500 text-white hover:bg-green-700 mt-4">
-                        Login
+                    <button 
+                        type="submit"
+                        className="btn bg-green-500 text-white hover:bg-green-700 mt-4"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Logging in...' : 'Login'}
                     </button>
                 </fieldset>
 
@@ -75,8 +90,6 @@ const Login = () => {
                     </Link>
                 </p>
             </form>
-
-            <SocialLogin />
         </div>
     );
 };
