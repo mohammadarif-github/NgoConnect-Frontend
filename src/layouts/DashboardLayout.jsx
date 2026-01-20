@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { FaHandsHelping, FaDonate, FaUser, FaBullhorn } from "react-icons/fa";
+import { FaHandsHelping, FaDonate, FaUser, FaBullhorn, FaUsers, FaHandHoldingHeart, FaClock } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
 
@@ -13,6 +13,9 @@ const navLinkClass = ({ isActive }) =>
 const DashboardLayout = () => {
   const { user } = useAuth();
   const isAdminOrManager = user?.role === 'admin' || user?.role === 'manager';
+  const isAdmin = user?.role === 'admin';
+  const isVolunteer = user?.role === 'volunteer';
+  const isGeneralUser = user?.role === 'general_user';
 
   return (
     <div className="drawer lg:drawer-open min-h-screen bg-base-100">
@@ -72,6 +75,42 @@ const DashboardLayout = () => {
                 <NavLink to="/dashboard/campaigns" className={navLinkClass}>
                   <FaBullhorn />
                   Manage Campaigns
+                </NavLink>
+              </li>
+            )}
+
+            {isAdmin && (
+              <li>
+                <NavLink to="/dashboard/users" className={navLinkClass}>
+                  <FaUsers />
+                  Manage Users
+                </NavLink>
+              </li>
+            )}
+            
+            {isAdmin && (
+              <li>
+                <NavLink to="/dashboard/volunteers" className={navLinkClass}>
+                  <FaHandHoldingHeart />
+                  Manage Volunteers
+                </NavLink>
+              </li>
+            )}
+
+            {isVolunteer && (
+              <li>
+                <NavLink to="/dashboard/volunteer/logs" className={navLinkClass}>
+                  <FaClock />
+                  My Time Logs
+                </NavLink>
+              </li>
+            )}
+
+            {isGeneralUser && (
+              <li>
+                <NavLink to="/dashboard/volunteer/apply" className={navLinkClass}>
+                  <FaHandHoldingHeart />
+                  Become a Volunteer
                 </NavLink>
               </li>
             )}

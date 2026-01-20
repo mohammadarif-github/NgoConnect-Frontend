@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
   const { getUserProfile, updateProfile, changePassword, user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [profile, setProfile] = useState(null);
+  const [volunteerProfile, setVolunteerProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   
   // Profile Update Form
@@ -25,6 +28,14 @@ const Profile = () => {
     formState: { errors: passwordErrors } 
   } = useForm();
 
+  // Volunteer Profile Form
+  const {
+      register: registerVolunteer,
+      handleSubmit: handleSubmitVolunteer,
+      setValue: setVolunteerValue,
+      formState: { errors: volunteerErrors }
+  } = useForm();
+
   const loadProfile = async () => {
     try {
       const data = await getUserProfile();
@@ -32,12 +43,37 @@ const Profile = () => {
       // Set initial values for form
       setValue('first_name', data.first_name);
       setValue('last_name', data.last_name);
+      
+      // If volunteer, get volunteer details
+      if (data.role === 'volunteer') {
+         try {
+             const vRes = await axiosSecure.get('/api/volunteer/profile/');
+             const vData = vRes.data;
+             setVolunteerProfile(vData);
+             setVolunteerValue('skills', vData.skills);
+             setVolunteerValue('availability', vData.availability);
+         } catch (vErr) {
+             console.error("Failed to load volunteer profile", vErr);
+         }
+      }
+
       setIsLoading(false);
     } catch (error) {
       console.error('Failed to load profile:', error);
       toast.error('Failed to load profile data');
       setIsLoading(false);
     }
+  };
+
+  const onUpdateVolunteerProfile = async (data) => {
+      try {
+          const res = await axiosSecure.patch('/api/volunteer/profile/', data);
+          setVolunteerProfile(res.data);
+          toast.success('Volunteer profile updated');
+      } catch (error) {
+          console.error("Failed to update volunteer profile", error);
+          toast.error('Failed to update volunteer info');
+      }
   };
 
   useEffect(() => {
@@ -51,7 +87,10 @@ const Profile = () => {
       toast.success('Profile updated successfully');
     } catch (error) {
       console.error('Update profile error:', error);
-      toast.error('Failed to update profile');
+      const errorMessage = error.response?.data?.error || 
+                           error.response?.data?.detail || 
+                           'Failed to update profile';
+      toast.error(errorMessage);
     }
   };
 
@@ -103,6 +142,35 @@ const Profile = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
+        {/* Volunteer Profile Section - Only if volunteer */}
+        {profile?.role === 'volunteer' && (
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 md:col-span-2 border-l-4 border-l-green-500">
+                <h3 className="text-xl font-semibold text-gray-800 mb-6">Volunteer Information</h3>
+                <form onSubmit={handleSubmitVolunteer(onUpdateVolunteerProfile)} className="space-y-4">
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Skills</span>
+                        </label>
+                        <textarea 
+                            className="textarea textarea-bordered" 
+                            {...registerVolunteer('skills', { required: 'Skills are required' })}
+                        ></textarea>
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Availability</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            className="input input-bordered" 
+                            {...registerVolunteer('availability', { required: 'Availability is required' })}
+                        />
+                    </div>
+                     <button className="btn bg-green-600 text-white w-full">Update Volunteer Info</button>
+                </form>
+            </div>
+        )}
+
         {/* Update Profile Form */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <h3 className="text-xl font-bold text-gray-800 mb-6 border-b pb-2">

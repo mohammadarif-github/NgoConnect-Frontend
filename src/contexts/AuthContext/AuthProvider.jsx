@@ -7,6 +7,28 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Function to fetch current user profile and update state
+  const fetchUserProfile = async () => {
+    const accessToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+    if (!accessToken) {
+       setUser(null);
+       return;
+    }
+
+    try {
+      const response = await axios.get(`${API_BASE_URL}${API_ENDPOINTS.PROFILE}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const userData = response.data;
+      setUser(userData);
+      localStorage.setItem(STORAGE_KEYS.USER_EMAIL, userData.email);
+      localStorage.setItem(STORAGE_KEYS.USER_ROLE, userData.role);
+    } catch (error) {
+       console.error("Failed to fetch profile", error);
+       // Handle error appropriately
+    }
+  };
+
   // Initialize user from localStorage and fetch latest profile
   useEffect(() => {
     const initializeAuth = async () => {
@@ -209,6 +231,7 @@ const AuthProvider = ({ children }) => {
     getUserProfile,
     updateProfile,
     changePassword,
+    fetchUserProfile,
   };
 
   return (

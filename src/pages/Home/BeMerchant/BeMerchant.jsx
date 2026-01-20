@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HeartHandshake, HandHeart, Users } from "lucide-react";
 import location from "../../../assets/location-merchant.png";
@@ -79,21 +80,25 @@ const BeMerchant = () => {
 
             {/* BUTTONS */}
             <div className="flex gap-4 flex-wrap pt-6">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn bg-green-700 text-white hover:bg-green-800 px-10 py-3 rounded-full shadow-lg"
-              >
-                Become a Volunteer
-              </motion.button>
+              <Link to="/dashboard/volunteer/apply">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn bg-green-700 text-white hover:bg-green-800 px-10 py-3 rounded-full shadow-lg"
+                >
+                  Become a Volunteer
+                </motion.button>
+              </Link>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn bg-white text-green-700 border border-green-600 px-10 py-3 rounded-full shadow-lg hover:bg-green-100"
-              >
-                Become a Donor
-              </motion.button>
+              <Link to="/SendDonation">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn bg-white text-green-700 border border-green-600 px-10 py-3 rounded-full shadow-lg hover:bg-green-100"
+                >
+                  Become a Donor
+                </motion.button>
+              </Link>
             </div>
           </motion.div>
 

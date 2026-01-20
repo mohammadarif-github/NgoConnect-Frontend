@@ -14,6 +14,10 @@ import Campaign from "../pages/Campaign/Campaigns";
 import CampaignDetails from "../pages/Campaign/CampaignDetails";
 import ManageCampaigns from "../pages/Dashboard/ManageCampaigns/ManageCampaigns";
 import CampaignForm from "../pages/Dashboard/ManageCampaigns/CampaignForm";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
+import ApplyVolunteer from "../pages/Dashboard/Volunteer/ApplyVolunteer";
+import MyTimeLogs from "../pages/Dashboard/Volunteer/MyTimeLogs";
+import ManageVolunteers from "../pages/Dashboard/ManageVolunteers/ManageVolunteers";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +89,22 @@ export const router = createBrowserRouter([
       {
         path: 'campaigns/edit/:slug',
         element: <CampaignForm />
+      },
+      {
+        path: 'users',
+        element: <ManageUsers />
+      },
+      {
+        path: 'volunteer/apply',
+        element: <ApplyVolunteer />
+      },
+      {
+        path: 'volunteer/logs',
+        element: <MyTimeLogs />
+      },
+      {
+        path: 'volunteers',
+        element: <ManageVolunteers />
       }
     ],
   }
