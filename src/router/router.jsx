@@ -18,6 +18,8 @@ import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import ApplyVolunteer from "../pages/Dashboard/Volunteer/ApplyVolunteer";
 import MyTimeLogs from "../pages/Dashboard/Volunteer/MyTimeLogs";
 import ManageVolunteers from "../pages/Dashboard/ManageVolunteers/ManageVolunteers";
+import About from "../pages/About/About";
+
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +34,10 @@ export const router = createBrowserRouter([
         path: 'coverage',
         element: <Coverage />, // changed from Component
       },
+      {
+  path: "/about",
+  element: <About />
+},
       {
        path:'campaign',
        element:<Campaign  />
