@@ -32,63 +32,72 @@ const Login = () => {
     }
 
     return (
-        <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
-            <h3 className="text-3xl text-center text-green-600 font-bold">Welcome back</h3>
-            <p className='text-center text-green-500'>Please Login</p>
+        <div className="w-full">
+            <div className="mb-8">
+                <h3 className="text-3xl font-extrabold text-gray-900">Welcome Back</h3>
+                <p className='text-gray-500 mt-2'>Please enter your details to sign in.</p>
+            </div>
 
-            <form className="card-body" onSubmit={handleSubmit(handleLogin)}>
-                <fieldset className="fieldset" disabled={isLoading}>
+            <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
+                <fieldset className="space-y-4" disabled={isLoading}>
                     {/* email field */}
-                    <label className="label text-green-700">Email</label>
-                    <input
-                        type="email"
-                        {...register('email', { required: true })}
-                        className="input input-bordered"
-                        placeholder="Email"
-                    />
-                    {
-                        errors.email?.type === 'required' &&
-                        <p className='text-red-500'>Email is required</p>
-                    }
+                    <div className="form-control">
+                        <label className="label text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input
+                            type="email"
+                            {...register('email', { required: true })}
+                            className="input input-bordered w-full h-12 px-4 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50"
+                            placeholder="Enter your email"
+                        />
+                        {
+                            errors.email?.type === 'required' &&
+                            <p className='text-red-500 text-sm mt-1'>Email is required</p>
+                        }
+                    </div>
 
                     {/* password field */}
-                    <label className="label text-green-700">Password</label>
-                    <input
-                        type="password"
-                        {...register('password', { required: true, minLength: 8 })}
-                        className="input input-bordered"
-                        placeholder="Password"
-                    />
-                    {
-                        errors.password?.type === 'required' &&
-                        <p className='text-red-500'>Password is required</p>
-                    }
-                    {
-                        errors.password?.type === 'minLength' &&
-                        <p className='text-red-500'>Password must be 8 characters or longer</p>
-                    }
+                    <div className="form-control">
+                        <label className="label text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input
+                            type="password"
+                            {...register('password', { required: true, minLength: 8 })}
+                            className="input input-bordered w-full h-12 px-4 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all bg-gray-50"
+                            placeholder="••••••••"
+                        />
+                        {
+                            errors.password?.type === 'required' &&
+                            <p className='text-red-500 text-sm mt-1'>Password is required</p>
+                        }
+                        {
+                            errors.password?.type === 'minLength' &&
+                            <p className='text-red-500 text-sm mt-1'>Password must be 8 characters or longer</p>
+                        }
+                    </div>
 
-                    <div>
-                        <Link to="/forgot-password" className="link link-hover text-green-600">Forgot password?</Link>
+                    <div className="flex justify-end">
+                        <Link to="/forgot-password" className="text-sm font-medium text-green-600 hover:text-green-800 transition-colors">Forgot password?</Link>
                     </div>
 
                     <button 
                         type="submit"
-                        className="btn bg-green-500 text-white hover:bg-green-700 mt-4"
+                        className="btn btn-block h-12 bg-green-600 text-white hover:bg-green-700 border-none rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all"
                         disabled={isLoading}
                     >
-                        {isLoading ? 'Logging in...' : 'Login'}
+                        {isLoading ? (
+                            <span className="loading loading-spinner"></span>
+                        ) : 'Sign In'}
                     </button>
+                    
                 </fieldset>
 
-                <p className="text-center">
-                    New to NGO Connect?{" "}
+                <p className="text-center text-gray-600">
+                    Don't have an account?{" "}
                     <Link
                         state={location.state}
-                        className='text-green-600 underline'
+                        className='font-bold text-green-600 hover:text-green-800 transition-colors'
                         to="/register"
                     >
-                        Register
+                        Create an account
                     </Link>
                 </p>
             </form>

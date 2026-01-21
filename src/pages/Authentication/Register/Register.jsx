@@ -54,111 +54,124 @@ const Register = () => {
 
   return (
     <>
-      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-        <div className="card-body">
-          <h2 className="text-4xl font-bold text-green-600">Create An Account</h2>
+      <div className="w-full">
+        <div className="mb-8">
+          <h2 className="text-3xl font-extrabold text-gray-900">Create Account</h2>
+          <p className="text-gray-500 mt-2">Join us and start your journey.</p>
+        </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <fieldset className="fieldset" disabled={isLoading}>
-              {/* First Name */}
-              <label className="label text-green-700">First Name</label>
-              <input
-                type="text"
-                {...register('firstName', { required: true })}
-                className="input input-bordered"
-                placeholder="First Name"
-              />
-              {errors.firstName?.type === 'required' && (
-                <p className='text-red-500'>First name is required</p>
-              )}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <fieldset className="space-y-4" disabled={isLoading}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* First Name */}
+                  <div className="form-control">
+                      <label className="label text-sm font-medium text-gray-700 mb-1">First Name</label>
+                      <input
+                        type="text"
+                        {...register('firstName', { required: true })}
+                        className="input input-bordered w-full h-11 px-4 rounded-lg focus:ring-2 focus:ring-green-500 bg-gray-50"
+                        placeholder="John"
+                      />
+                      {errors.firstName?.type === 'required' && (
+                        <p className='text-red-500 text-xs mt-1'>First name required</p>
+                      )}
+                  </div>
 
-              {/* Last Name */}
-              <label className="label text-green-700">Last Name</label>
-              <input
-                type="text"
-                {...register('lastName', { required: true })}
-                className="input input-bordered"
-                placeholder="Last Name"
-              />
-              {errors.lastName?.type === 'required' && (
-                <p className='text-red-500'>Last name is required</p>
-              )}
+                  {/* Last Name */}
+                  <div className="form-control">
+                      <label className="label text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                      <input
+                        type="text"
+                        {...register('lastName', { required: true })}
+                        className="input input-bordered w-full h-11 px-4 rounded-lg focus:ring-2 focus:ring-green-500 bg-gray-50"
+                        placeholder="Doe"
+                      />
+                      {errors.lastName?.type === 'required' && (
+                        <p className='text-red-500 text-xs mt-1'>Last name required</p>
+                      )}
+                  </div>
+              </div>
 
               {/* Email */}
-              <label className="label text-green-700">Email</label>
-              <input
-                type="email"
-                {...register('email', { required: true })}
-                className="input input-bordered"
-                placeholder="Email"
-              />
-              {errors.email?.type === 'required' && (
-                <p className='text-red-500'>Email is required</p>
-              )}
+              <div className="form-control">
+                  <label className="label text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    {...register('email', { required: true })}
+                    className="input input-bordered w-full h-11 px-4 rounded-lg focus:ring-2 focus:ring-green-500 bg-gray-50"
+                    placeholder="john@example.com"
+                  />
+                  {errors.email?.type === 'required' && (
+                    <p className='text-red-500 text-xs mt-1'>Email is required</p>
+                  )}
+              </div>
 
               {/* Password */}
-              <label className="label text-green-700">Password</label>
-              <input
-                type="password"
-                {...register('password', { 
-                  required: true, 
-                  minLength: 8,
-                  pattern: /(?=.*\d)/ 
-                })}
-                className="input input-bordered"
-                placeholder="Password"
-              />
-              {errors.password?.type === 'required' && (
-                <p className='text-red-500'>Password is required</p>
-              )}
-              {errors.password?.type === 'minLength' && (
-                <p className='text-red-500'>
-                  Password must be at least 8 characters
-                </p>
-              )}
-              {errors.password?.type === 'pattern' && (
-                <p className='text-red-500'>
-                  Password must contain at least one digit
-                </p>
-              )}
+              <div className="form-control">
+                  <label className="label text-sm font-medium text-gray-700 mb-1">Password</label>
+                  <input
+                    type="password"
+                    {...register('password', { 
+                      required: true, 
+                      minLength: 8,
+                      pattern: /(?=.*\d)/ 
+                    })}
+                    className="input input-bordered w-full h-11 px-4 rounded-lg focus:ring-2 focus:ring-green-500 bg-gray-50"
+                    placeholder="••••••••"
+                  />
+                  {errors.password?.type === 'required' && (
+                    <p className='text-red-500 text-xs mt-1'>Password is required</p>
+                  )}
+                  {errors.password?.type === 'minLength' && (
+                    <p className='text-red-500 text-xs mt-1'>
+                      Must be at least 8 chars
+                    </p>
+                  )}
+                  {errors.password?.type === 'pattern' && (
+                    <p className='text-red-500 text-xs mt-1'>
+                      Must contain a number
+                    </p>
+                  )}
+              </div>
 
               {/* Confirm Password */}
-              <label className="label text-green-700">Confirm Password</label>
-              <input
-                type="password"
-                {...register('confirmPassword', { 
-                  required: true,
-                  validate: value => value === password || "Passwords do not match"
-                })}
-                className="input input-bordered"
-                placeholder="Confirm Password"
-              />
-              {errors.confirmPassword?.type === 'required' && (
-                <p className='text-red-500'>Please confirm your password</p>
-              )}
-              {errors.confirmPassword?.message && (
-                <p className='text-red-500'>{errors.confirmPassword.message}</p>
-              )}
+              <div className="form-control">
+                  <label className="label text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                  <input
+                    type="password"
+                    {...register('confirmPassword', { 
+                      required: true,
+                      validate: value => value === password || "Passwords do not match"
+                    })}
+                    className="input input-bordered w-full h-11 px-4 rounded-lg focus:ring-2 focus:ring-green-500 bg-gray-50"
+                    placeholder="••••••••"
+                  />
+                  {errors.confirmPassword?.type === 'required' && (
+                    <p className='text-red-500 text-xs mt-1'>Confirm password</p>
+                  )}
+                  {errors.confirmPassword?.message && (
+                    <p className='text-red-500 text-xs mt-1'>{errors.confirmPassword.message}</p>
+                  )}
+              </div>
 
               <button 
                 type="submit" 
-                className="btn bg-green-500 text-white mt-4 hover:bg-green-700 w-full"
+                className="btn btn-block h-12 bg-green-600 text-white mt-6 hover:bg-green-700 border-none rounded-lg font-semibold shadow-md transition-all"
                 disabled={isLoading}
               >
-                {isLoading ? 'Registering...' : 'Register'}
+                {isLoading ? <span className="loading loading-spinner"></span> : 'Create Account'}
               </button>
             </fieldset>
 
-            <p className="text-center mt-4">
-              <small>
+            <p className="text-center text-gray-600 mt-6">
+              <small className="text-base">
                 Already have an account?{' '}
-                <Link className="text-green-600 underline" to="/login">
-                  Login
+                <Link className="font-bold text-green-600 hover:text-green-800 transition-colors" to="/login">
+                  Sign in
                 </Link>
               </small>
             </p>
           </form>
-        </div>
       </div>
 
       {/* OTP Verification Modal */}
