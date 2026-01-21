@@ -16,13 +16,13 @@ const About = () => {
         { icon: <FaLeaf className="text-4xl text-emerald-600" />, count: "100+", label: "Active Campaigns" },
     ];
 
-    const teamMembers = [
-  { name: "Mohammad Ariful Islam", role: "Founder & CEO", img: "/dist/assets/20251206_063526.jpg.jpeg" },
-  { name: "Md. Azad Hossan Munna", role: "Head of Operations", img: "/dist/assets/WhatsApp Image 2026-01-21 at 17.20.21.jpeg" },
-  { name: "Sadhon Kumar Dev", role: "Community Lead", img: "/dist/assets/WhatsApp Image 2026-01-21 at 18.32.22.jpeg" },
-  { name: "Sujoy Sarkar", role: "Volunteer Coordinator", img: "/dist/assets/WhatsApp Image 2025-01-28 at 23.30.13_7420dc17.jpg.jpeg" },
-  { name: "Tanvir Ahammad Riyad", role: "Fundraising Manager", img: "/dist/assets/IMG_20260121_155741.jpg.jpeg" },
-  { name: "Sorfaraz Sazid", role: "Marketing & Outreach Lead", img: "/dist/assets/IMG-20241018-WA0014.jpg.jpeg" },
+  const teamMembers = [
+  { name: "Mohammad Ariful Islam", role: "Founder & CEO", img: "/src/assets/brands/20251206_063526.jpg.jpeg" },
+  { name: "Md. Azad Hossan Munna", role: "Head of Operations", img: "/src/assets/brands/WhatsApp Image 2026-01-21 at 17.20.21.jpeg" },
+  { name: "Sadhon Kumar Dev", role: "Community Lead", img: "/src/assets/brands/WhatsApp Image 2026-01-21 at 18.32.22.jpeg" },
+  { name: "Sujoy Sarkar", role: "Volunteer Coordinator", img: "/src/assets/brands/WhatsApp Image 2025-01-28 at 23.30.13_7420dc17.jpg.jpeg" },
+  { name: "Tanvir Ahammad Riyad", role: "Fundraising Manager", img: "/src/assets/brands/IMG-20241018-WA0014.jpg.jpeg" },
+  { name: "Sorfaraz Sazid", role: "Marketing & Outreach Lead", img: "/src/assets/brands/IMG_20260121_155741.jpg.jpeg" },
 ];
 
 
